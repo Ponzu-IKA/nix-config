@@ -31,6 +31,7 @@
     kdePackages.dolphin
     hyprpolkitagent
     git
+    lazygit
 
     noto-fonts-cjk-sans
   ];
