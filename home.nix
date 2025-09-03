@@ -27,22 +27,27 @@
     fastfetch
     bottom
     fish
-    alvr
     kdePackages.dolphin
     hyprpolkitagent
     git
     lazygit
-
+    gparted
+    yt-dlp
+    vlc
+    krita
+    prismlauncher-unwrapped
+    
+    noto-fonts-color-emoji
+    nerd-fonts.jetbrains-mono
     noto-fonts-cjk-sans
   ];
 
   fonts.fontconfig = {
     enable = true;
     defaultFonts = {
-      sansSerif = [
-        "Noto Sans CJK JP"
-      ];
-      emoji = ["Noto Color Emoji"];
+      sansSerif = [ "Noto Sans CJK JP" ];
+      monospace = [ "JetBrainsMono Nerd Font" ];
+      emoji = [ "Noto Color Emoji" ];
     };
   };
 

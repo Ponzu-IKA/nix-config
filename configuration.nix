@@ -4,19 +4,49 @@
 
 { config, lib, pkgs, ... }:
 
-{
+let unstable = import (builtins.fetchTarball "channel:nixos-unstable") { config = config.nixpkgs.config; }; in
+let jdkEnvironments = pkgs.runCommand "jdk-env" { 
+  buildInputs = with pkgs; [ zulu8 zulu17 zulu21];
+  } ''
+    mkdir -p $out/jdks
+    ln -s ${pkgs.zulu8}		$out/jdks/zulu8
+    ln -s ${pkgs.zulu17}	$out/jdks/zulu17
+    ln -s ${pkgs.zulu21}	$out/jdks/zulu21
+  '';
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+  fileSystems = {
+    "/".options = [ "compress=zstd" ];
+    "/home".options = [ "compress=zstd" ];
+    "/nix".options = [ "compress=zstd" "noatime" ];
+    "/.swapvol".options = [ "noatime" ];
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
- 
+  boot.kernelPackages = pkgs.linuxPackages_xanmod;
+  boot.initrd.kernelModules = [ "nvidia" "i915" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+
+  networking = {
+    firewall = {
+  enable = true;
+  allowedTCPPorts = [ 43301 ];
+  allowedUDPPortRanges = [
+    {from = 43301; to = 43301;}
+  ];};
+  };
+  
+  nix = {
+    settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+    };
+  };
  # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -30,6 +60,9 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   #securityConf
   security.polkit.enable = true;
+  security.sudo = {
+    extraRules = [{ users = ["amaiice"]; commands = [ "ALL" "SETENV" "NOPASSWD" ];}];
+  };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "ja_JP.UTF-8";
@@ -49,19 +82,18 @@
 
 
   # グラフィック設定.
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
+    enable32Bit = true;
   };
   services.xserver.videoDrivers = [ "nvidia" ];
-  boot.kernelParams = [
-    "nvidia-drim.modeset=1"
-    "nvidia-drm.fbdev=1"
-  ];
+  
   hardware.nvidia = {
-    powerManagement.enable = true;
-    open = false;
+    modesetting.enable = true;
+    powerManagement.enable = false;
     nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    open=true;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
   # Enable the X11 windowing system.
@@ -76,9 +108,44 @@
     enable = true;
     withUWSM = true;
   };
-  programs.steam.enable = true;
+  programs.steam = {
+    enable = true;
+#    package = unstable.steam;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    localNetworkGameTransfers.openFirewall = true;
+  };
+  
+  programs.adb.enable = true;
 
+  users.users.amaiice = {
+    isNormalUser = true;
+    extraGroups = [ "adbusers" "sudoers" "wheel" "realtime" ];
+  };
+    services.udev.packages = [
+    pkgs.android-udev-rules
+  ];
+
+  services = {
+    wivrn = {
+      enable = true;
+      openFirewall = true;
+    };
+  };
+
+  services.udev.extraRules = ''
+SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666", GROUP="plugdev" 
+  '';
+/*
+  programs.alvr = {
+  enable = true;
+  package = unstable.alvr;
+  openFirewall = true;
+};*/
+
+  environment.pathsToLink = [ "/jdks" ];
   environment.systemPackages = with pkgs; [
+    usbutils
     firefox
     git
     neovim
@@ -87,12 +154,19 @@
     alacritty
     fish
     wl-clipboard
+    sidequest
+    lunarvim
+    
+    # /run/current-system/sw/jdks 配下にjdkファイルが生成される.
+    jdkEnvironments
   ];
 
   environment.variables = {
     GTK_IM_MODULE = "fcitx5";
     QT_IM_MODULE = "fcitx5";
     XMODIFIERS = "@im=fcitx5";
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
  
 
