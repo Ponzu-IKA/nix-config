@@ -1,14 +1,18 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 let r = pkg :
   pkgs.runCommand "jdk-env" {
     buildInput = pkg;
   }
   '' 
     mkdir -p $out/jdks
+    # pkgにあるファイルすべてをout/jdks/pkg.nameに配置.
+    # pkg.nameはそのままpackageの名前を取得する.
+    # (例: zulu-ca-jdk-17.0.12 )
     ln -s ${pkg}   $out/jdks/${pkg.name}
     '';
 in {
   environment.systemPackages = with pkgs; [
+    # /run/current-system/sw/jdks配下に生成されるよ.
     (r zulu8)
     (r zulu17)
     (r zulu21)

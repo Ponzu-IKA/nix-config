@@ -4,15 +4,7 @@
 
 { config, pkgs, ... }:
 
-let jdkEnvironments = pkgs.runCommand "jdk-env" { 
-  buildInputs = with pkgs; [ zulu8 zulu17 zulu21];
-  } ''
-    mkdir -p $out/jdks
-    ln -s ${pkgs.zulu8}		$out/jdks/zulu8
-    ln -s ${pkgs.zulu17}	$out/jdks/zulu17
-    ln -s ${pkgs.zulu21}	$out/jdks/zulu21
-  '';
-in {
+{
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -174,9 +166,6 @@ SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666",
     sidequest
     lunarvim
     hyprshot
-    
-    # /run/current-system/sw/jdks 配下にjdkファイルが生成される.
-    #jdkEnvironments
   ];
 
   environment.variables = {
