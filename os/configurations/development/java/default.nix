@@ -1,4 +1,5 @@
 { pkgs, ... }:
+/*
 let r = pkg :
   pkgs.runCommand "jdk-env" {
     buildInput = pkg;
@@ -10,9 +11,9 @@ let r = pkg :
     # (例: zulu-ca-jdk-17.0.12 )
     ln -s ${pkg}   $out/jdks/${pkg.name}
     '';
-in {
+in 
+*/{
   environment.systemPackages = with pkgs; [
-    # /run/current-system/sw/jdks配下に生成されるよ.
     zulu21
   ];
   
