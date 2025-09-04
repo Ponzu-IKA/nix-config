@@ -33,17 +33,23 @@ in {
   boot.initrd.kernelModules = [ "nvidia" "i915" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
 
   networking = {
+    hostName = "nixos-main";
     firewall = {
-  enable = true;
-  allowedTCPPorts = [ 43301 ];
-  allowedUDPPortRanges = [
-    {from = 43301; to = 43301;}
-  ];};
+      enable = true;
+    };
   };
   
   nix = {
     settings = {
+      auto-optimise-store = true; # nix storeの最適化.
       experimental-features = [ "nix-command" "flakes" ];
+    };
+    
+    #7日ごとにgcを実行する.
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
     };
   };
  # networking.hostName = "nixos"; # Define your hostname.
@@ -75,7 +81,7 @@ in {
     pulseaudio = true;
     nvidia.acceptLicense = true;
     packageOverrides =  pkgs: { inherit (pkgs) linuxPackages_latest nvidia_x11;};
-    allowUnfree = true;
+    allowUnfree = true;# 企業系パッケージの有効化
   };
   
 
@@ -131,6 +137,10 @@ in {
       defaultEditor = true;
       viAlias = true;
       vimAlias = true;
+    };
+
+    bash = {
+      interactiveShellInit = "fish";
     };
 
     fish = {
