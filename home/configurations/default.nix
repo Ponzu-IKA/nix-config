@@ -1,7 +1,8 @@
 {
   imports = [
     ./home.nix
-    ./wm/hyprland
-    ./cli/fastfetch
+    ./wm
+    ./cli
+    ./gui
   ];
 }

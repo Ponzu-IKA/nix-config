@@ -170,7 +170,6 @@ SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666",
     starship
     usbutils
     firefox
-    alacritty
     wl-clipboard
     sidequest
     lunarvim
