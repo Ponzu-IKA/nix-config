@@ -19,8 +19,7 @@
           inherit inputs;
         };
         modules = [
-          ./home/configurations/wm/hyprland
-          ./home/configurations/home.nix
+          ./home/configurations
         ];
       };
     };

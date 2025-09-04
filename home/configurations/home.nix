@@ -25,7 +25,6 @@
     home.packages = with pkgs; [
     discord
     wofi
-    fastfetch
     bottom
     kdePackages.dolphin
     lazygit
