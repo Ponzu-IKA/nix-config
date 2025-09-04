@@ -10,7 +10,7 @@
 
   outputs = inputs: {
     homeConfigurations = {
-      home = inputs.home-manager.lib.homeManagerConfiguration {
+      amaiice = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = import inputs.nixpkgs {
           system = "x86_64-linux";
           config.allowUnfree = true;
@@ -19,7 +19,8 @@
           inherit inputs;
         };
         modules = [
-          ./home.nix
+          ./home/configurations/wm/hyprland
+          ./home/configurations/home.nix
         ];
       };
     };
