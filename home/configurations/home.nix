@@ -32,8 +32,7 @@
     yt-dlp
     vlc
     krita
-    prismlauncher-unwrapped
-    
+       
     noto-fonts-color-emoji
     nerd-fonts.jetbrains-mono
     noto-fonts-cjk-sans

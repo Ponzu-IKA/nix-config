@@ -13,9 +13,7 @@ let r = pkg :
 in {
   environment.systemPackages = with pkgs; [
     # /run/current-system/sw/jdks配下に生成されるよ.
-    (r zulu8)
-    (r zulu17)
-    (r zulu21)
+    zulu21
   ];
   
 }
