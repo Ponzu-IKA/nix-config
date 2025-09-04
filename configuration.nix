@@ -2,9 +2,8 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, ... }:
+{ config, pkgs, ... }:
 
-let unstable = import (builtins.fetchTarball "channel:nixos-unstable") { config = config.nixpkgs.config; }; in
 let jdkEnvironments = pkgs.runCommand "jdk-env" { 
   buildInputs = with pkgs; [ zulu8 zulu17 zulu21];
   } ''
@@ -102,25 +101,73 @@ in {
   };
   
   # enable Universal Wayland Session Manager.
-  programs.uwsm.enable = true;
-  
-  programs.hyprland = {
-    enable = true;
-    withUWSM = true;
-  };
-  programs.steam = {
-    enable = true;
-#    package = unstable.steam;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true;
-  };
-  
-  programs.adb.enable = true;
+  programs = {
+    uwsm = {
+      enable = true;
+    };
 
+    hyprland = {
+      enable = true;
+      withUWSM = true;
+    };
+
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+      localNetworkGameTransfers.openFirewall = true;
+    };
+    
+    adb = {
+      enable = true;
+    };
+
+    git = {
+      enable = true;
+    };
+
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+    };
+
+    fish = {
+      enable = true;
+      interactiveShellInit = "set fish_greeting;fastfetch;starship init fish | source";
+    };
+
+    starship = {
+      enable = true;
+      settings = {
+        format = "$os:$username@$hostname $directory>";
+
+        username = {
+          style_user = "green bold";
+          style_root = "red bold";
+          format = "[$user]($style)";
+          show_always = true;
+        };
+
+        hostname = {
+          ssh_only = false;
+          format = "[$ssh_symbol$hostname](bold white)";
+        };
+
+        os = {
+          disabled = false;
+          format = "[$symbol]($style)";
+          style = "bold cyan";
+        };
+      };
+    };
+  };
+ 
   users.users.amaiice = {
     isNormalUser = true;
-    extraGroups = [ "adbusers" "sudoers" "wheel" "realtime" ];
+    shell = pkgs.fish;
+    extraGroups = [ "adbusers" "wheel" "realtime" ];
   };
     services.udev.packages = [
     pkgs.android-udev-rules
@@ -145,17 +192,14 @@ SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666",
 
   environment.pathsToLink = [ "/jdks" ];
   environment.systemPackages = with pkgs; [
+    starship
     usbutils
     firefox
-    git
-    neovim
-    vim
-    zsh
     alacritty
-    fish
     wl-clipboard
     sidequest
     lunarvim
+    hyprshot
     
     # /run/current-system/sw/jdks 配下にjdkファイルが生成される.
     jdkEnvironments
