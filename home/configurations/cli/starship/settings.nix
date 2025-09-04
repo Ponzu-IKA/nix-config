@@ -1,6 +1,5 @@
 {
   programs.starship = {
-    enable = true;
     settings = {
     #│
     format = ''
@@ -38,6 +37,7 @@
         format = "[ ]($style)";
         style = "bold cyan";
       };
+      rust.symbol = "󱘗 ";
     };
   };
 }

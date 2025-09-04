@@ -2,6 +2,6 @@
   # インポートだけ書く..
   # envとかの設定がいるなら別ファイルにする
   imports = [
-    ./starship
+    ./fish.nix
   ];
 }

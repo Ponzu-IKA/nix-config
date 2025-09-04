@@ -5,9 +5,9 @@
     ./fish-integrations.nix
   ];
   
-  environment.systemPackages = with pkgs; [
-    starship
-    fish
-  ];
+  programs = {
+    starship.enable = true;
+    fish.enable = true;
+  };
 
 }

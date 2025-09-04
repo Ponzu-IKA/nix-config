@@ -1,0 +1,3 @@
+{
+  programs.bash.interactiveShellInit = "fish";
+}
