@@ -7,6 +7,14 @@
 ┌─\[$directory\](-\[$vcsh$fossil_branch$fossil_metrics$git_branch$git_commit$git_state$git_metrics$git_status$hg_branch\])(-\[$c$cmake$cobol$daml$dart$deno$dotnet$elixier$elm$erlang$fennel$gleam$golang$guix_shell$haskell$haxe$helm$java$julia$kotlin$gradle$lua$nim$nodejs$ocaml$opa$perl$php$pulumi$purescript$python$quatro$raku$rlang$red$ruby$rust$scala$solidity$swift$terraform$typst$vlang$vagrant$zig$buf\])(-\[$time\])
 └─\[$os$username@$hostname\]$sudo>
 '';
+      git_status = {
+        style = "cyan bold";
+        staged = "[󰸩 +\($count\)](green)";
+        modified = "󱞂 ";
+        stashed = "󰆧 ";
+        ahead = " [$count](green bold)";
+        behind = " [$count](red bold)";
+      };
       sudo = {
         disabled = false;
       };
