@@ -29,6 +29,7 @@
         system = "x86_64-linux";
         modules = [
           ./configuration.nix
+          ./os/configurations
         ];
         specialArgs = {
           inherit inputs;

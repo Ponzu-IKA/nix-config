@@ -138,45 +138,10 @@ in {
       viAlias = true;
       vimAlias = true;
     };
-
-    bash = {
-      interactiveShellInit = "fish";
-    };
-
-    fish = {
-      enable = true;
-      interactiveShellInit = "set fish_greeting;fastfetch;starship init fish | source";
-    };
-
-    starship = {
-      enable = true;
-      settings = {
-        format = "$os:$username@$hostname $directory>";
-
-        username = {
-          style_user = "green bold";
-          style_root = "red bold";
-          format = "[$user]($style)";
-          show_always = true;
-        };
-
-        hostname = {
-          ssh_only = false;
-          format = "[$ssh_symbol$hostname](bold white)";
-        };
-
-        os = {
-          disabled = false;
-          format = "[$symbol]($style)";
-          style = "bold cyan";
-        };
-      };
-    };
   };
  
   users.users.amaiice = {
     isNormalUser = true;
-    shell = pkgs.fish;
     extraGroups = [ "adbusers" "wheel" "realtime" ];
   };
     services.udev.packages = [

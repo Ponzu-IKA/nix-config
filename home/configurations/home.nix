@@ -27,7 +27,6 @@
     wofi
     fastfetch
     bottom
-    fish
     kdePackages.dolphin
     lazygit
     gparted
