@@ -3,5 +3,6 @@
   # envとかの設定がいるなら別ファイルにする
   imports = [
     ./fish.nix
+    ./development
   ];
 }

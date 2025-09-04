@@ -176,7 +176,7 @@ SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666",
     hyprshot
     
     # /run/current-system/sw/jdks 配下にjdkファイルが生成される.
-    jdkEnvironments
+    #jdkEnvironments
   ];
 
   environment.variables = {
