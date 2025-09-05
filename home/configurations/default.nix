@@ -4,5 +4,6 @@
     ./wm
     ./cli
     ./gui
+    ./env
   ];
 }
