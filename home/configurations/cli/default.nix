@@ -2,5 +2,6 @@
   imports = [
     ./starship
     ./fastfetch
+    ./movie
   ];
 }
