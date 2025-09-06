@@ -25,7 +25,7 @@
   boot.initrd.kernelModules = [ "nvidia" "i915" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
 
   networking = {
-    hostName = "nixos-main";
+    hostName = "nixos";
     firewall = {
       enable = true;
       allowedUDPPortRanges = [{ from = 1714; to = 1764;}];
@@ -136,7 +136,7 @@
  
   users.users.amaiice = {
     isNormalUser = true;
-    extraGroups = [ "adbusers" "wheel" "realtime" ];
+    extraGroups = [ "adbusers" "wheel" "realtime" "input" ];
   };
     services.udev.packages = [
     pkgs.android-udev-rules
