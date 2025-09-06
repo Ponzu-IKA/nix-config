@@ -14,7 +14,7 @@ let r = pkg :
 in 
 */{
   environment.systemPackages = with pkgs; [
-    zulu21
+    zulu17
   ];
   
 }
