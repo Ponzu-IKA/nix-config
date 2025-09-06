@@ -4,5 +4,6 @@
   imports = [
     ./fish.nix
     ./development
+    ./drawingtablet.nix
   ];
 }
