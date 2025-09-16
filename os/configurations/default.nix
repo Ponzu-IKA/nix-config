@@ -5,5 +5,6 @@
     ./fish.nix
     ./development
     ./drawingtablet.nix
+#    ./xserver.nix
   ];
 }

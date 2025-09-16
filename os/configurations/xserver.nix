@@ -1,6 +1,9 @@
 {
   services.xserver = {
-    layout = "jp";
-    model = "pc104";
+    enable = true;
+    xkb = {
+      layout = "jp";
+      model = "pc104";
+    };
   };
 }
