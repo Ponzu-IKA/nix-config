@@ -36,7 +36,7 @@
   nix = {
     settings = {
       auto-optimise-store = true; # nix storeの最適化.
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [ "nix-command" "flakes"];
     };
     
     #7日ごとにgcを実行する.
@@ -161,6 +161,7 @@ SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666",
 
   environment.pathsToLink = [ "/jdks" ];
   environment.systemPackages = with pkgs; [
+    pulseaudio
     starship
     usbutils
     firefox
@@ -168,6 +169,8 @@ SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666",
     sidequest
     lunarvim
     hyprshot
+
+    rust-analyzer
   ];
 
   environment.variables = {
