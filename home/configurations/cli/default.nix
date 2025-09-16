@@ -3,5 +3,6 @@
     ./starship
     ./fastfetch
     ./movie
+    ./neovim
   ];
 }
