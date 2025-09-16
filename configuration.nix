@@ -97,7 +97,11 @@
 
   # Enable the X11 windowing system.
   services.displayManager = {
-    defaultSession = "hyprland";
+    defaultSession = "hyprland-uwsm";
+    #sddm = {
+     # wayland.enable = true;
+    #};
+
   };
   
   # enable Universal Wayland Session Manager.
@@ -172,6 +176,8 @@ SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666",
 
     rust-analyzer
   ];
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   environment.variables = {
     GTK_IM_MODULE = "fcitx5";
