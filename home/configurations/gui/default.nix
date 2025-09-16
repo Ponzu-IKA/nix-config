@@ -3,5 +3,6 @@
     ./alacritty
     ./game
     ./kde
+    ./jetbrains.nix
   ];
 }
