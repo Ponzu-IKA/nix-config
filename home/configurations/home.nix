@@ -3,7 +3,7 @@
 
 {
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "discord"
+    "discord" "rust-rover"
   ];
  # Home Manager needs a bit of information about you and the paths it should
   # manage.
