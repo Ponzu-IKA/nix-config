@@ -4,5 +4,6 @@
     ./game
     ./kde
     ./jetbrains.nix
+    ./editor
   ];
 }
