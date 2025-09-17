@@ -27,7 +27,6 @@
     wofi
     bottom
     kdePackages.dolphin
-    lazygit
     gparted
     yt-dlp
     vlc

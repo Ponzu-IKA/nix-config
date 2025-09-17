@@ -4,5 +4,6 @@
     ./fastfetch
     ./movie
     ./neovim
+    ./vcs
   ];
 }
