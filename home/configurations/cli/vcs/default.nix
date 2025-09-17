@@ -11,7 +11,7 @@
             key = "E";
             description = "空コミット";
             context = "global";
-            command = "git commit --allow-empty -m '{{index .PromptResoinses | quote}}'";
+            command = "git commit --allow-empty -m '{{index .PromptResponses | quote}}'";
             prompts = [
               {
                 type = "input";
