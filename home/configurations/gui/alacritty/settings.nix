@@ -1,8 +1,18 @@
 {
   programs.alacritty.settings = {
     font = {
-      normal  = { family = "JetBrainsMono Nerd Font"; style = "normal"; };
-      bold    = { family = "JetBrainsMono Nerd Font"; style = "bold"; };
-    };
-  }; 
+      normal = {
+        family = "JetBrainsMono Nerd Font";
+        style = "Regular";
+      };
+      bold = {
+        family = "JetBrainsMono Nerd Font";
+        style = "Bold";
+      };
+      italic = {
+        family = "JetBrainsMono Nerd Font";
+        style = "Italic";
+      };
+     };
+  };
 }
