@@ -3,17 +3,20 @@
     lazygit = {
       enable = true;
       settings = {
+        gui = {
+          showIcons = true;
+        };
         customCommands = [
           {
             key = "E";
             description = "空コミット";
             context = "global";
-            command = "git commit --allow-empty -m '{{index .PromptResoinses 0}}'";
+            command = "git commit --allow-empty -m '{{index .PromptResoinses | quote}}'";
             prompts = [
               {
                 type = "input";
                 title = "Commit message";
-                initialValue = "chore: empty commit";
+                initialValue = "chore: ";
               }
             ];
           }
