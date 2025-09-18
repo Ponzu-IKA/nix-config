@@ -90,6 +90,8 @@
           nixd.enable = true;
           lua_ls.enable = true;
           yamlls.enable = true;
+          gopls.enable = true;
+
           nil_ls = {
             enable = true;
             settings = {
@@ -129,6 +131,7 @@
             "nix"
             "lua"
             "rust"
+            "go"
             "javascript"
           ];
           highlight = {
