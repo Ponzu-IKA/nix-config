@@ -4,7 +4,26 @@
       enable = true;
       settings = {
         gui = {
-          showIcons = true;
+          nerdFontsVersion = "3";
+     
+          customIcons = {
+            vcsIcons = {
+              branch = "";
+              merge-commit = ":)";
+              "github.com" = ":(";
+            };
+            fileIcons = {
+              directory = {
+                icon = "D";
+                color = "#878787";
+              };
+
+              file = {
+                icon = "F";
+                color = "#878787";
+              };
+            };
+          };
         };
         customCommands = [
           {
