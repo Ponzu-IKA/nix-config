@@ -2,6 +2,8 @@
 {
   home.packages = with pkgs; [
     waytrogen
-    hyprpaper
   ];
+  services.hyprpaper = {
+    enable = true;
+  };
 }
