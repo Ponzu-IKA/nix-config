@@ -24,6 +24,7 @@
     };
 
     plugins = {
+      toggleterm.enable = true;
 
       telescope = {
         enable = true;
