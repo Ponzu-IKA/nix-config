@@ -91,6 +91,7 @@
           lua_ls.enable = true;
           yamlls.enable = true;
           gopls.enable = true;
+          clangd.enable = true;
 
           nil_ls = {
             enable = true;
@@ -133,6 +134,7 @@
             "rust"
             "go"
             "javascript"
+            "cpp"
           ];
           highlight = {
             enable = true;
