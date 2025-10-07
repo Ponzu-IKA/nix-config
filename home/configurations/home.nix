@@ -1,11 +1,18 @@
-{ config, pkgs, lib, ... }:
-
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "discord" "rust-rover"
-  ];
- # Home Manager needs a bit of information about you and the paths it should
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "discord"
+      "rust-rover"
+    ];
+  # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home = {
     username = "amaiice";
@@ -22,7 +29,7 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-    home.packages = with pkgs; [
+  home.packages = with pkgs; [
     discord
     wofi
     bottom
@@ -31,7 +38,7 @@
     yt-dlp
     vlc
     krita
-       
+
     noto-fonts-color-emoji
     nerd-fonts.jetbrains-mono
     noto-fonts-cjk-sans
@@ -46,23 +53,24 @@
     };
   };
 
-  
   # HyprlandWM
-    xdg.configFile."uwsm/env".source = "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
+  xdg.configFile."uwsm/env".source =
+    "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
   /*
-  xdg.portal = {
-    enable = lib.mkForce true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
-  };*/
+    xdg.portal = {
+      enable = lib.mkForce true;
+      extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
+    };
+  */
 
-/*
-  home.sessionVariables = {
-    # EDITOR = "emacs";
-    GTK_IM_MODULE	= "fcitx5";
-    QT_IM_MODULE	= "fcitx5";
-    XMODIFIERS		= lib.mkForce "@im=fcitx5";
-  };
-*/
+  /*
+    home.sessionVariables = {
+      # EDITOR = "emacs";
+      GTK_IM_MODULE	= "fcitx5";
+      QT_IM_MODULE	= "fcitx5";
+      XMODIFIERS		= lib.mkForce "@im=fcitx5";
+    };
+  */
   # Let Home Manager install and manage itself.
   programs = {
     home-manager.enable = true;

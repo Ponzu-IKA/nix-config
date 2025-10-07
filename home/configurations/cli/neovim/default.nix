@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     wl-clipboard
+    gcc
   ];
   programs.nixvim.config = {
     enable = true;
@@ -23,9 +24,81 @@
       clipboard = "unnamedplus";
     };
 
+    keymaps = [
+      {
+        mode = "n";
+        key = "<F5>";
+        action = ":OverseerRun<CR>";
+        options.desc = "Build & Run with Overseer";
+      }
+    ];
+
     plugins = {
       toggleterm.enable = true;
+      quicker.enable = true;
+      notify.enable = true;
 
+      remote-nvim = {
+        enable = true;
+      };
+      overseer = {
+        enable = true;
+
+        settings = {
+          strategy = "toggleterm";
+        };
+
+        luaConfig = {
+          pre = ''
+            local overseer = require("overseer")
+
+            local file = vim.fn.expand("%:p")
+            local bin = vim.fn.expand("%:p:r")
+
+            overseer.setup({
+              templates = { "builtin" },
+            })
+
+            -- C++
+            overseer.register_template({
+              name = "C++ build & run",
+              builder = function()  
+                return {
+                  cmd = {"g++"},
+                  args = { "-O2", file, "-o", bin },
+                  components = {
+                    { "on_result_diagnostics_quickfix", open = true },
+                    { "on_output_quickfix", open = true, close = true },
+                    "default",
+                    {
+                      "run_after",
+                      task_names = {"Run compiled binary"}
+                   },
+                    { "on_complete_dispose", timeout = 1000 },
+                  },
+                }
+              end,
+              condition = {
+                filetype = { "cpp" },
+              }
+            })
+
+            overseer.register_template({
+              name = "Run compiled binary",
+              builder = function()
+              return {
+                  cmd = {bin},
+                  components = {
+                    "default",
+                    { "on_complete_dispose", timeout = 1000 },
+
+                  },
+                }
+              end,
+            })
+          '';
+        };
+      };
       telescope = {
         enable = true;
         settings = {
@@ -93,6 +166,16 @@
           yamlls.enable = true;
           gopls.enable = true;
           clangd.enable = true;
+          jsonls.enable = true;
+          ts_ls.enable = true;
+          groovyls = {
+            enable = true;
+            package = null;
+            filetypes = ["groovy"];
+            settings = {
+              hostname = "localhost:25564";
+            };
+          };
 
           nil_ls = {
             enable = true;
@@ -136,6 +219,8 @@
             "go"
             "javascript"
             "cpp"
+            "json"
+            "groovy"
           ];
           highlight = {
             enable = true;

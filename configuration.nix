@@ -5,14 +5,17 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
   fileSystems = {
     "/".options = [ "compress=zstd" ];
     "/home".options = [ "compress=zstd" ];
-    "/nix".options = [ "compress=zstd" "noatime" ];
+    "/nix".options = [
+      "compress=zstd"
+      "noatime"
+    ];
     "/.swapvol".options = [ "noatime" ];
   };
 
@@ -22,23 +25,70 @@
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_xanmod;
-  boot.initrd.kernelModules = [ "nvidia" "i915" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+  boot.initrd.kernelModules = [
+    "nvidia"
+    "i915"
+    "nvidia_modeset"
+    "nvidia_uvm"
+    "nvidia_drm"
+  ];
 
   networking = {
     hostName = "nixos";
+    hosts = {
+      "192.168.10.57" = [
+        "homelab-pve.local"
+      ];
+    };
+
     firewall = {
       enable = true;
-      allowedUDPPortRanges = [{ from = 1714; to = 1764;}];
-      allowedTCPPortRanges = [{ from = 1714; to = 1764;}];
+      allowedUDPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
+      allowedTCPPorts = [
+        8006
+        9090
+        3000
+      ];
+      allowedTCPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
     };
+    interfaces.enp4s0 = {
+      ipv4.addresses = [
+        {
+          address = "192.168.10.128";
+          prefixLength = 24;
+        }
+      ];
+    };
+    defaultGateway = {
+      address = "192.168.10.1";
+      interface = "enp4s0";
+    };
+    nameservers = [
+      "1.1.1.1"
+      "1.0.0.1"
+    ];
+
   };
-  
+
   nix = {
     settings = {
       auto-optimise-store = true; # nix storeの最適化.
-      experimental-features = [ "nix-command" "flakes"];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
     };
-    
+
     #7日ごとにgcを実行する.
     gc = {
       automatic = true;
@@ -46,7 +96,7 @@
       options = "--delete-older-than 7d";
     };
   };
- # networking.hostName = "nixos"; # Define your hostname.
+  # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
@@ -60,25 +110,33 @@
   #securityConf
   security.polkit.enable = true;
   security.sudo = {
-    extraRules = [{ users = ["amaiice"]; commands = [ "ALL" "SETENV" "NOPASSWD" ];}];
+    extraConfig = ''Defaults lecture = "always"'';
+    extraRules = [
+      {
+        users = [ "amaiice" ];
+        commands = [
+          "ALL"
+          "SETENV"
+          "NOPASSWD"
+        ];
+      }
+    ];
   };
 
   # Select internationalisation properties.
   i18n.defaultLocale = "ja_JP.UTF-8";
   console = {
-     # font = "Lat2-Terminus16";
-     keyMap = "jp106";
+    # font = "Lat2-Terminus16";
+    keyMap = "jp106";
   };
 
   #nixpkgsの設定.
   nixpkgs.config = {
     pulseaudio = true;
     nvidia.acceptLicense = true;
-    packageOverrides =  pkgs: { inherit (pkgs) linuxPackages_latest nvidia_x11;};
-    allowUnfree = true;# 企業系パッケージの有効化
+    packageOverrides = pkgs: { inherit (pkgs) linuxPackages_latest nvidia_x11; };
+    allowUnfree = true; # 企業系パッケージの有効化
   };
-  
-
 
   # グラフィック設定.
   hardware.graphics = {
@@ -86,12 +144,12 @@
     enable32Bit = true;
   };
   services.xserver.videoDrivers = [ "nvidia" ];
-  
+
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
     nvidiaSettings = true;
-    open=true;
+    open = true;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
@@ -99,11 +157,11 @@
   services.displayManager = {
     defaultSession = "hyprland-uwsm";
     #sddm = {
-     # wayland.enable = true;
+    # wayland.enable = true;
     #};
 
   };
-  
+
   # enable Universal Wayland Session Manager.
   programs = {
     uwsm = {
@@ -121,7 +179,7 @@
       dedicatedServer.openFirewall = true;
       localNetworkGameTransfers.openFirewall = true;
     };
-    
+
     adb = {
       enable = true;
     };
@@ -137,12 +195,17 @@
       vimAlias = true;
     };
   };
- 
+
   users.users.amaiice = {
     isNormalUser = true;
-    extraGroups = [ "adbusers" "wheel" "realtime" "input" ];
+    extraGroups = [
+      "adbusers"
+      "wheel"
+      "realtime"
+      "input"
+    ];
   };
-    services.udev.packages = [
+  services.udev.packages = [
     pkgs.android-udev-rules
   ];
 
@@ -154,17 +217,19 @@
   };
 
   services.udev.extraRules = ''
-SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666", GROUP="plugdev" 
+    SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666", GROUP="plugdev" 
   '';
-/*
-  programs.alvr = {
-  enable = true;
-  package = unstable.alvr;
-  openFirewall = true;
-};*/
+  /*
+      programs.alvr = {
+      enable = true;
+      package = unstable.alvr;
+      openFirewall = true;
+    };
+  */
 
   environment.pathsToLink = [ "/jdks" ];
   environment.systemPackages = with pkgs; [
+    cloudflared
     pulseaudio
     starship
     usbutils
@@ -173,6 +238,13 @@ SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666",
     sidequest
     lunarvim
     hyprshot
+
+    libx11
+    libxcursor
+    libxrandr
+    libxxf86vm
+    xorg.libXi
+    libGL
 
     rust-analyzer
   ];
@@ -186,7 +258,132 @@ SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666",
     GBM_BACKEND = "nvidia-drm";
     __GLX_VENDOR_LIBRARY_NAME = "nvidia";
   };
- 
+
+  programs.nix-ld = {
+    enable = true;
+    # From https://github.com/NixOS/nixpkgs/issues/240444#issuecomment-1988645885
+    libraries = with pkgs; [
+      desktop-file-utils
+      xorg.libXcomposite
+      xorg.libXtst
+      xorg.libXrandr
+      xorg.libXext
+      xorg.libX11
+      xorg.libXfixes
+      libGL
+
+      gst_all_1.gstreamer
+      gst_all_1.gst-plugins-ugly
+      gst_all_1.gst-plugins-base
+      libdrm
+      xorg.xkeyboardconfig
+      xorg.libpciaccess
+
+      glib
+      gtk2
+      bzip2
+      zlib
+      gdk-pixbuf
+
+      xorg.libXinerama
+      xorg.libXdamage
+      xorg.libXcursor
+      xorg.libXrender
+      xorg.libXScrnSaver
+      xorg.libXxf86vm
+      xorg.libXi
+      xorg.libSM
+      xorg.libICE
+      freetype
+      curlWithGnuTls
+      nspr
+      nss
+      fontconfig
+      cairo
+      pango
+      expat
+      dbus
+      cups
+      libcap
+      SDL2
+      libusb1
+      udev
+      dbus-glib
+      atk
+      at-spi2-atk
+      libudev0-shim
+
+      xorg.libXt
+      xorg.libXmu
+      xorg.libxcb
+      xorg.xcbutil
+      xorg.xcbutilwm
+      xorg.xcbutilimage
+      xorg.xcbutilkeysyms
+      xorg.xcbutilrenderutil
+      libGLU
+      libuuid
+      libogg
+      libvorbis
+      SDL
+      SDL2_image
+      glew110
+      openssl
+      libidn
+      tbb
+      wayland
+      mesa
+      libxkbcommon
+      vulkan-loader
+
+      flac
+      freeglut
+      libjpeg
+      libpng12
+      libpulseaudio
+      libsamplerate
+      libmikmod
+      libthai
+      libtheora
+      libtiff
+      pixman
+      speex
+      SDL_image
+      SDL_mixer
+      SDL2_ttf
+      SDL2_mixer
+      libappindicator-gtk2
+      libcaca
+      libcanberra
+      libgcrypt
+      libvpx
+      librsvg
+      xorg.libXft
+      libvdpau
+      alsa-lib
+
+      harfbuzz
+      e2fsprogs
+      libgpg-error
+      keyutils.lib
+      libjack2
+      fribidi
+      p11-kit
+
+      gmp
+
+      # used by hyprpanel
+      libgtop
+
+      # libraries not on the upstream include list, but nevertheless expected
+      # by at least one appimage
+      libtool.lib # for Synfigstudio
+      xorg.libxshmfence # for apple-music-electron
+      at-spi2-core
+      pciutils # for FreeCAD
+      pipewire # immersed-vr wayland support
+    ];
+  };
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -268,4 +465,3 @@ SUBSYSTEMS=="usb", ATTR{idVendor}=="2833", ATTR{idProduct}=="0186", MODE="0666",
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
-

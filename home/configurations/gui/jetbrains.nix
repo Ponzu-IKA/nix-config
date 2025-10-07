@@ -1,13 +1,7 @@
-{ pkgs, lib, ...}:
-{      
-  home.packages = with pkgs; [
-    rustup
-    gcc
+{ pkgs, lib, ... }:
+{
+  home.packages = with pkgs.jetbrains; [
+    rust-rover
+    idea-community-bin
   ];
-  programs.jetbrains-remote = {
-    enable = true;
-    ides = with pkgs.jetbrains; [
-      rust-rover
-    ];
-  };
 }
