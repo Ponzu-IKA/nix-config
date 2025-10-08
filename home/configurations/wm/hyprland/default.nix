@@ -10,8 +10,11 @@
     package = null;
     portalPackage = null;
 
-    extraConfig = ( builtins.readFile ../../../config/hyprland/hyprland.conf );
-    systemd.variables = ["--all"];
-    systemd.enable = true;
+    extraConfig = (builtins.readFile ../../../config/hyprland/hyprland.conf);
+    /*
+      systemd.variables = [ "--all" ];
+      systemd.enable = true;
+    */
   };
+
 }

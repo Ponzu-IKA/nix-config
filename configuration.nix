@@ -155,7 +155,9 @@
 
   # Enable the X11 windowing system.
   services.displayManager = {
-    defaultSession = "hyprland-uwsm";
+    ly = {
+      enable = true;
+    };
     #sddm = {
     # wayland.enable = true;
     #};
@@ -164,13 +166,10 @@
 
   # enable Universal Wayland Session Manager.
   programs = {
-    uwsm = {
-      enable = true;
-    };
-
     hyprland = {
       enable = true;
-      withUWSM = true;
+      xwayland.enable = true;
+      withUWSM = false;
     };
 
     steam = {
@@ -239,6 +238,7 @@
     lunarvim
     hyprshot
 
+    xrandr
     libx11
     libxcursor
     libxrandr
