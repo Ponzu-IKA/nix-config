@@ -6,5 +6,6 @@
     ./development
     ./drawingtablet.nix
     ./xserver.nix
+    ./steam.nix
   ];
 }
