@@ -2,8 +2,9 @@
   imports = [
     ./alacritty
     ./game
-    #./kde
+    ./kde
     ./jetbrains.nix
     ./editor
+    ./obs.nix
   ];
 }

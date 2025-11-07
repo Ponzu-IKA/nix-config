@@ -1,0 +1,85 @@
+19:56:12.821 [ATL-Logging-Thread] INFO  - Organising filesystem
+
+19:56:12.823 [ATL-Logging-Thread] INFO  - Unknown language English. Defaulting to 英語
+
+19:56:12.823 [ATL-Logging-Thread] INFO  - ATLauncher Version: 3.4.38.2 [b6f3b1ac61b9be9f3d4573d01dc291077f7ad130]
+
+19:56:12.824 [ATL-Logging-Thread] INFO  - App Arguments: ["--working-dir","**USERSDIR**","--no-launcher-update"]
+
+19:56:12.824 [ATL-Logging-Thread] INFO  - JVM Arguments: []
+
+19:56:12.824 [ATL-Logging-Thread] INFO  - Java Version: Java 21 (21.0.8)
+
+19:56:12.825 [ATL-Logging-Thread] INFO  - Java Path: /nix/store/hm028d05qs6138ggq02239sh6qf5xwd6-openjdk-21.0.8+9/lib/openjdk
+
+19:56:12.825 [ATL-Logging-Thread] INFO  - 64 Bit Java: true
+
+19:56:12.825 [ATL-Logging-Thread] INFO  - RAM Available: 31936MB
+
+19:56:12.826 [ATL-Logging-Thread] INFO  - Launcher Directory: **USERSDIR**
+
+19:56:12.865 [ATL-Logging-Thread] INFO  - GPU: GA103 [GeForce RTX 3060 Ti] (NVIDIA Corporation (0x10de)) unknown 8224MB VRAM
+
+19:56:12.939 [ATL-Logging-Thread] INFO  - CPU: 12th Gen Intel(R) Core(TM) i5-12400F 6 cores/12 threads
+
+19:56:12.940 [ATL-Logging-Thread] INFO  - Operating System: NixOS (25.11 (Xantusia) build 6.12.48-xanmod1)
+
+19:56:12.942 [ATL-Logging-Thread] INFO  - Bitness: 64
+
+19:56:12.942 [ATL-Logging-Thread] INFO  - Uptime: 377327
+
+19:56:12.946 [ATL-Logging-Thread] INFO  - Manufacturer: GNU/Linux
+
+19:56:12.947 [ATL-Logging-Thread] INFO  - Showing splash screen and loading everything
+
+19:56:12.948 [ATL-Logging-Thread] INFO  - Checking for updated files!
+
+19:56:17.401 [ATL-Logging-Thread] INFO  - Finished downloading updated files!
+
+19:56:21.581 [ATL-Logging-Thread] INFO  - Launcher finished loading everything
+
+19:56:21.583 [ATL-Logging-Thread] WARN  - Launcher not setup. Loading Setup Dialog
+
+19:56:21.617 [ATL-Logging-Thread] ERROR - Error on GraphQL query
+
+19:56:21.618 [ATL-Logging-Thread] ERROR - com.apollographql.apollo.exception.ApolloHttpException: HTTP 403 Forbidden
+
+19:56:21.619 [ATL-Logging-Thread] ERROR - 	at com.apollographql.apollo.internal.interceptor.ApolloParseInterceptor.parse(ApolloParseInterceptor.java:108)
+
+19:56:21.619 [ATL-Logging-Thread] ERROR - 	at com.apollographql.apollo.internal.interceptor.ApolloParseInterceptor$1.onResponse(ApolloParseInterceptor.java:53)
+
+19:56:21.619 [ATL-Logging-Thread] ERROR - 	at com.apollographql.apollo.internal.interceptor.ApolloServerInterceptor$executeHttpCall$1.onResponse(ApolloServerInterceptor.kt:114)
+
+19:56:21.620 [ATL-Logging-Thread] ERROR - 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+
+19:56:21.620 [ATL-Logging-Thread] ERROR - 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+
+19:56:21.621 [ATL-Logging-Thread] ERROR - 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+
+19:56:21.621 [ATL-Logging-Thread] ERROR - 	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+19:56:21.623 [ATL-Logging-Thread] ERROR - com.apollographql.apollo.exception.ApolloHttpException: HTTP 403 Forbidden
+	at com.apollographql.apollo.internal.interceptor.ApolloParseInterceptor.parse(ApolloParseInterceptor.java:108)
+	at com.apollographql.apollo.internal.interceptor.ApolloParseInterceptor$1.onResponse(ApolloParseInterceptor.java:53)
+	at com.apollographql.apollo.internal.interceptor.ApolloServerInterceptor$executeHttpCall$1.onResponse(ApolloServerInterceptor.kt:114)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+
+19:56:24.408 [ATL-Logging-Thread] INFO  - Launcher opening
+
+19:56:24.408 [ATL-Logging-Thread] INFO  - Made By Bob*
+
+19:56:24.409 [ATL-Logging-Thread] INFO  - *(Not Actually)
+
+19:56:24.409 [ATL-Logging-Thread] INFO  - Setting up Bottom Bar
+
+19:56:24.427 [ATL-Logging-Thread] INFO  - Finished Setting up Bottom Bar
+
+19:56:24.427 [ATL-Logging-Thread] INFO  - Setting up Tabs
+
+19:56:24.596 [ATL-Logging-Thread] INFO  - Finished Setting up Tabs
+
+19:56:24.602 [ATL-Logging-Thread] INFO  - Showing Launcher
+

@@ -13,6 +13,9 @@
         family = "JetBrainsMono Nerd Font";
         style = "Italic";
       };
-     };
+    };
+    window = {
+      opacity = 0.0;
+    };
   };
 }

@@ -171,7 +171,7 @@
           groovyls = {
             enable = true;
             package = null;
-            filetypes = ["groovy"];
+            filetypes = [ "groovy" ];
             settings = {
               hostname = "localhost:25564";
             };

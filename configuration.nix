@@ -52,6 +52,7 @@
       allowedTCPPorts = [
         8006
         9090
+        5037
         3000
       ];
       allowedTCPPortRanges = [
@@ -137,7 +138,10 @@
     packageOverrides = pkgs: { inherit (pkgs) linuxPackages_latest nvidia_x11; };
     allowUnfree = true; # 企業系パッケージの有効化
   };
-
+  
+  hardware.opengl = {
+    enable = true;
+  };
   # グラフィック設定.
   hardware.graphics = {
     enable = true;
@@ -149,9 +153,11 @@
     modesetting.enable = true;
     powerManagement.enable = false;
     nvidiaSettings = true;
-    open = true;
+    open = false;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
+
+ # nixpkgs.config.cudaSupport = true;
 
   # Enable the X11 windowing system.
   services.displayManager = {
@@ -166,8 +172,13 @@
 
   # enable Universal Wayland Session Manager.
   programs = {
-    hyprland = {
+  fuse = {enable = true;};
+    niri = {
       enable = true;
+    };
+
+    hyprland = {
+      enable = false;
       xwayland.enable = true;
       withUWSM = false;
     };
@@ -211,7 +222,12 @@
   services = {
     wivrn = {
       enable = true;
+      package = pkgs.wivrn.override {cudaSupport = true;};
       openFirewall = true;
+      autoStart = true;
+      config.json = {
+        application = [pkgs.wlx-overlay-s];
+      };
     };
   };
 
@@ -228,6 +244,9 @@
 
   environment.pathsToLink = [ "/jdks" ];
   environment.systemPackages = with pkgs; [
+    direnv
+    perf
+
     cloudflared
     pulseaudio
     starship
@@ -236,17 +255,31 @@
     wl-clipboard
     sidequest
     lunarvim
-    hyprshot
+    xwayland-satellite
+    xdg-desktop-portal-gtk
+    xdg-desktop-portal-gnome
 
+    #glfw
     xrandr
+    xorg.libX11
+    xorg.libXcursor
     libx11
     libxcursor
     libxrandr
     libxxf86vm
     xorg.libXi
     libGL
+         glfw3-minecraft
+      openal
+      pciutils
+      mesa-demos
+
+
 
     rust-analyzer
+
+    ffmpeg-full
+    cudaPackages.cudatoolkit
   ];
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
@@ -271,6 +304,10 @@
       xorg.libX11
       xorg.libXfixes
       libGL
+      libGLU
+      glfw
+      mesa
+       #libglvnd
 
       gst_all_1.gstreamer
       gst_all_1.gst-plugins-ugly

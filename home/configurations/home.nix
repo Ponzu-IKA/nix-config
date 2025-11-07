@@ -11,7 +11,11 @@
     builtins.elem (lib.getName pkg) [
       "discord"
       "rust-rover"
+      "reaper"
+      "vital"
+      "idea-ultimate"
     ];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home = {
@@ -26,18 +30,27 @@
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "25.05"; # Please read the comment before changing.
-
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
     discord
-    wofi
     bottom
+ #   kio-fuse
+     kdePackages.qtsvg
+        kdePackages.kio-fuse #to mount remote filesystems via FUSE
+    kdePackages.kio-extras #extra protocols support (sftp, fish and more)
     kdePackages.dolphin
+    kdePackages.dolphin-plugins
+    kdePackages.polkit-kde-agent-1
+    kdePackages.polkit-qt-1
     gparted
     yt-dlp
     vlc
     krita
+    pavucontrol
+    libappindicator
+    reaper
+    vital
 
     noto-fonts-color-emoji
     nerd-fonts.jetbrains-mono
@@ -53,14 +66,15 @@
     };
   };
 
-  # HyprlandWM
-  xdg.configFile."uwsm/env".source =
-    "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
   /*
-    xdg.portal = {
-      enable = lib.mkForce true;
-      extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
-    };
+    # HyprlandWM
+    xdg.configFile."uwsm/env".source =
+      "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
+    /*
+      xdg.portal = {
+        enable = lib.mkForce true;
+        extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
+      };
   */
 
   /*

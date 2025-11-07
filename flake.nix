@@ -1,15 +1,14 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     # 再現性100%のHOME環境を作るえらいこ.
     home-manager = {
-     url = "github:nix-community/home-manager";
-     inputs.nixpkgs.follows = "nixpkgs";
-   };
-   nixvim = {
-      url = "github:nix-community/nixvim";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
-   };
+    };
+    nixvim = {
+      url = "github:nix-community/nixvim";
+    };
   };
 
   outputs = inputs: {
@@ -25,7 +24,7 @@
         modules = [
           ./home/configurations
 
-	  inputs.nixvim.homeManagerModules.nixvim
+          inputs.nixvim.homeManagerModules.nixvim
         ];
       };
     };
