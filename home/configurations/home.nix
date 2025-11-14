@@ -50,6 +50,7 @@
     pavucontrol
     libappindicator
     reaper
+    openutau
     vital
 
     noto-fonts-color-emoji
