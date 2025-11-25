@@ -32,6 +32,7 @@
     "nvidia_uvm"
     "nvidia_drm"
   ];
+  zramSwap.enable = true;
 
   networking = {
     hostName = "nixos";
@@ -138,10 +139,7 @@
     packageOverrides = pkgs: { inherit (pkgs) linuxPackages_latest nvidia_x11; };
     allowUnfree = true; # 企業系パッケージの有効化
   };
-  
-  hardware.opengl = {
-    enable = true;
-  };
+
   # グラフィック設定.
   hardware.graphics = {
     enable = true;
@@ -153,11 +151,11 @@
     modesetting.enable = true;
     powerManagement.enable = false;
     nvidiaSettings = true;
-    open = false;
+    open = true;
     package = config.boot.kernelPackages.nvidiaPackages.beta;
   };
 
- # nixpkgs.config.cudaSupport = true;
+  # nixpkgs.config.cudaSupport = true;
 
   # Enable the X11 windowing system.
   services.displayManager = {
@@ -172,7 +170,9 @@
 
   # enable Universal Wayland Session Manager.
   programs = {
-  fuse = {enable = true;};
+    fuse = {
+      enable = true;
+    };
     niri = {
       enable = true;
     };
@@ -216,17 +216,20 @@
     ];
   };
   services.udev.packages = [
-    pkgs.android-udev-rules
   ];
 
   services = {
     wivrn = {
       enable = true;
-      package = pkgs.wivrn.override {cudaSupport = true;};
+
+      package = pkgs.wivrn.override {
+        cudaSupport = true;
+      };
+
       openFirewall = true;
       autoStart = true;
       config.json = {
-        application = [pkgs.wlx-overlay-s];
+        application = [ pkgs.wlx-overlay-s ];
       };
     };
   };
@@ -246,6 +249,7 @@
   environment.systemPackages = with pkgs; [
     direnv
     perf
+    gnupg
 
     cloudflared
     pulseaudio
@@ -269,12 +273,10 @@
     libxxf86vm
     xorg.libXi
     libGL
-         glfw3-minecraft
-      openal
-      pciutils
-      mesa-demos
-
-
+    glfw3-minecraft
+    openal
+    pciutils
+    mesa-demos
 
     rust-analyzer
 
@@ -282,7 +284,10 @@
     cudaPackages.cudatoolkit
   ];
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment.sessionVariables = {
+    ELECTRON_OZONE_PLATFORM_HINT = "wayland";
+    NIXOS_OZONE_WL = "1";
+  };
 
   environment.variables = {
     GTK_IM_MODULE = "fcitx5";
@@ -307,7 +312,7 @@
       libGLU
       glfw
       mesa
-       #libglvnd
+      #libglvnd
 
       gst_all_1.gstreamer
       gst_all_1.gst-plugins-ugly
