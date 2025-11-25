@@ -3,7 +3,8 @@
     ./starship
     ./fastfetch
     ./movie
- #   ./neovim
+    ./neovim
     ./vcs
+    ./tools.nix
   ];
 }
