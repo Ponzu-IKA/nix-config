@@ -52,6 +52,7 @@
     reaper
     openutau
     vital
+    gimp
 
     noto-fonts-color-emoji
     nerd-fonts.jetbrains-mono
