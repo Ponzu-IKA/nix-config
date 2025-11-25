@@ -9,7 +9,7 @@
       fcitx5-gtk
       libsForQt5.fcitx5-qt
       kdePackages.fcitx5-qt
-      fcitx5-configtool
+      qt6Packages.fcitx5-configtool
     ];
   };
 }
