@@ -4,25 +4,31 @@
   ...
 }:
 let
+  pname = "noita-proxy";
   version = "v1.6.2";
 in
 {
   home.packages = [
     (pkgs.stdenv.mkDerivation {
-      pname = "noita-proxy";
+      pname = pname;
       version = version;
       src = pkgs.fetchzip {
-        url = "https://github.com/IntQuant/noita_entangled_worlds/releases/tag/${version}/noita-proxy-linux.zip";
-        sha256 = "sha256-1xq67ksmq90mzz0kqiymm8maky7cin6sardwjv397m2qjqkn79hg";
+        url = "https://github.com/IntQuant/noita_entangled_worlds/releases/download/${version}/noita-proxy-linux.zip";
+stripRoot=false;
+        sha256 = "sha256-08+W4uGTzVrnX4tsnoLFwvEuLPozdJbKAJZQJoqjXBA=";
       };
-
-      nativeBuildPackages = with pkgs; [
-        makeWrapper
-      ];
 
       installPhase = ''
         mkdir -p $out/bin
-        wrapProgram $out/bin/noita-proxy --run 'fastfetch'
+
+        cp libsteam_api.so $out/
+        install -m755 noita_proxy.x86_64 $out/${pname}
+        cat > $out/bin/${pname} << EOF
+        #!/bin/sh
+        echo ${pname} ${version}
+        exec steam-run $out/${pname} "\$@"
+        EOF
+        chmod +x $out/bin/${pname}
       '';
     })
   ];
