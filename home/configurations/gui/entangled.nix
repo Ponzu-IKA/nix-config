@@ -3,33 +3,27 @@
   lib,
   ...
 }:
-
 let
-  noitaEW = (
-    pkgs.stdenv.mkDerivation rec {
-      pname = "noita_proxy";
-      version = "v1.6.2";
-
+  version = "v1.6.2";
+in
+{
+  home.packages = [
+    (pkgs.stdenv.mkDerivation {
+      pname = "noita-proxy";
+      version = version;
       src = pkgs.fetchzip {
-        url = "https://github.com/IntQuant/noita_entangled_worlds/releases/tag/${version}/noita-proxy-linux.zip ";
-        sha256 = "sha256-0";
+        url = "https://github.com/IntQuant/noita_entangled_worlds/releases/tag/${version}/noita-proxy-linux.zip";
+        sha256 = "sha256-1xq67ksmq90mzz0kqiymm8maky7cin6sardwjv397m2qjqkn79hg";
       };
 
-      nativeBuildInputs = with pkgs; [
+      nativeBuildPackages = with pkgs; [
         makeWrapper
-        unzip
       ];
 
       installPhase = ''
         mkdir -p $out/bin
-
-        install -m755 ${pname} $out/bin/${pname}-real
-
-        wrapProgram $out/bin/${pname}-real --prefix steam-run
+        wrapProgram $out/bin/noita-proxy --run 'fastfetch'
       '';
-    }
-  );
-in
-{
-  home.packages = with pkgs; [ noitaEW ];
+    })
+  ];
 }
